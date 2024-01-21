@@ -12,10 +12,11 @@ func _ready():
 
 func onArcaneClientInitialized(initialState: AModels.InitialState):
     
-    for pad in initialState.pads: createPlayer(pad)
+    #for pad in initialState.pads: createPlayer(pad)
+    $Player.initialize(initialState.pads[0])
         
-    Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
-    Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)
+    #Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
+    #Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)
     
 
 func onIframePadConnect(e):

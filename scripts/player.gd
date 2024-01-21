@@ -25,8 +25,13 @@ var coins = 0
 @onready var model = $Character
 @onready var animation = $Character/AnimationPlayer
 
-# Functions
+var pad: ArcanePad
 
+# Functions
+func initialize(_pad:ArcanePad) -> void:
+    pad = _pad
+    pad.on("Attack", jump)
+    
 func _physics_process(delta):
     
     # Handle functions
