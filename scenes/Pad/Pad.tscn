@@ -1,51 +1,83 @@
-[gd_scene load_steps=6 format=3 uid="uid://c053s22k8v8d5"]
+[gd_scene load_steps=5 format=3 uid="uid://c053s22k8v8d5"]
 
-[ext_resource type="Script" path="res://Scenes/Pad/Pad.gd" id="1_6lrkq"]
-[ext_resource type="Script" path="res://Scenes/Pad/CalibratePointerTopLeftButton.gd" id="2_l34s1"]
-[ext_resource type="Script" path="res://Scenes/Pad/CalibratePointerBottomRightButton.gd" id="3_6p1dl"]
-[ext_resource type="Script" path="res://Scenes/Pad/CalibrateRotationButton.gd" id="4_au57t"]
-[ext_resource type="Script" path="res://Scenes/Pad/AttackButton.gd" id="4_dkd3i"]
+[ext_resource type="Script" path="res://scenes/Pad/DPadContButton.gd" id="1_ngt8u"]
+[ext_resource type="Script" path="res://scenes/Pad/JumpButton.gd" id="2_g2dbf"]
 
-[node name="VBoxContainer" type="VBoxContainer"]
-modulate = Color(0.305882, 0.509804, 1, 1)
-self_modulate = Color(0.803922, 0.423529, 0.921569, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhn0d"]
+bg_color = Color(0.0562968, 0.685081, 0.736676, 0.745098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbsfl"]
+bg_color = Color(1, 0.392157, 0.392157, 1)
+
+[node name="HBoxContainer" type="HBoxContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
-alignment = 1
-script = ExtResource("1_6lrkq")
 
-[node name="CalibratePointerTopLeftButton" type="Button" parent="."]
+[node name="DPadContButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_bhn0d")
+script = ExtResource("1_ngt8u")
+
+[node name="DPad" type="Control" parent="DPadContButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="DPadContButton/DPad"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785398
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(100, 100)
+size_flags_horizontal = 3
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="DPadContButton/DPad/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785398
+pivot_offset = Vector2(100, 100)
+size_flags_horizontal = 3
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="JumpButton" type="Button" parent="."]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 40
-text = "Calibrate Pointer Top Left"
-script = ExtResource("2_l34s1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jbsfl")
+text = "JUMP"
+script = ExtResource("2_g2dbf")
 
-[node name="CalibratePointerBottomRightButton" type="Button" parent="."]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 40
-text = "Calibrate Pointer Bottom Right"
-script = ExtResource("3_6p1dl")
-
-[node name="AttackButton" type="Button" parent="."]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 40
-text = "Attack!"
-script = ExtResource("4_dkd3i")
-
-[node name="CalibrateRotationButton" type="Button" parent="."]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 40
-text = "Calibrate Rotation"
-script = ExtResource("4_au57t")
+[connection signal="button_down" from="DPadContButton" to="DPadContButton" method="_on_button_down"]

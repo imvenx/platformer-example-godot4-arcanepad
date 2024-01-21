@@ -30,7 +30,7 @@ var pad: ArcanePad
 # Functions
 func initialize(_pad:ArcanePad) -> void:
     pad = _pad
-    pad.on("Attack", jump)
+    pad.on("Jump", onJump)
     
 func _physics_process(delta):
     
@@ -103,13 +103,16 @@ func handle_controls(delta):
     input.x = Input.get_axis("move_left", "move_right")
     input.z = Input.get_axis("move_forward", "move_back")
     
-    input = input.rotated(Vector3.UP, view.rotation.y).normalized()
+    #input = input.rotated(Vector3.UP, view.rotation.y).normalized()
     
     movement_velocity = input * movement_speed * delta
     
     # Jumping
     
-    if Input.is_action_just_pressed("jump"):
+    if Input.is_action_just_pressed("jump"): onJump()
+    
+
+func onJump():
         
         if jump_single or jump_double:
             Audio.play("res://sounds/jump.ogg")
@@ -123,7 +126,6 @@ func handle_controls(delta):
             
         if(jump_single): jump()
 
-# Handle gravity
 
 func handle_gravity(delta):
     
@@ -134,7 +136,6 @@ func handle_gravity(delta):
         jump_single = true
         gravity = 0
 
-# Jumping
 
 func jump():
     
