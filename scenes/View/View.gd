@@ -12,11 +12,14 @@ func _ready():
 
 func onArcaneClientInitialized(initialState: AModels.InitialState):
     for pad in initialState.pads: 
+        if AUtils.isNullOrEmpty(pad.iframeId): 
+            Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
+            return
+                
         #createPlayer(pad)
         $Player.initialize(initialState.pads[0])
         
-    if(initialState.pads.size() < 1):
-        Arcane.msg.on(AEventName.IframePadConnect, onIframePadConnect)
+    #if(initialState.pads.size() < 1):
     #Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)
     
 
@@ -43,16 +46,16 @@ func onIframePadConnect(e):
     #destroy_player(player)
 
 
-func createPlayer(pad):
-    if(AUtils.isNullOrEmpty(pad.iframeId)): return
-    
-    var newPlayer = player.instantiate()
-    print(newPlayer)
-    newPlayer.initialize(pad)
-    add_child(newPlayer)
-    players.append(newPlayer)
-    
-
-func destroy_player(player):
-    players.erase(player)
-    player.queue_free()
+#func createPlayer(pad):
+    #if(AUtils.isNullOrEmpty(pad.iframeId)): return
+    #
+    #var newPlayer = player.instantiate()
+    #print(newPlayer)
+    #newPlayer.initialize(pad)
+    #add_child(newPlayer)
+    #players.append(newPlayer)
+    #
+#
+#func destroy_player(player):
+    #players.erase(player)
+    #player.queue_free()
