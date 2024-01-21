@@ -35,14 +35,15 @@ func onPress(e):
    
  
 func onDrag(e):
-    $DPad.position = e.position 
     var diffX = e.position.x - pressingPoint.x 
     var diffY = e.position.y - pressingPoint.y  
+    $DPad/Joystick.position = Vector2(diffX, diffY)
     Arcane.msg.emitToViews(MovePlayerEvent.new(diffX, diffY))  
     
     
 func onRelease(e):
     $DPad.position = dPadInitialPos
+    $DPad/Joystick.position = Vector2(0,0)
     isPressing = false
     Arcane.msg.emitToViews(AEvents.ArcaneBaseEvent.new("StopMovingPlayer"))
     
