@@ -31,7 +31,20 @@ var pad: ArcanePad
 func initialize(_pad:ArcanePad) -> void:
     pad = _pad
     pad.on("Jump", onJump)
-    
+    pad.on("MovePlayer", movePlayer)
+    pad.on("StopMovingPlayer", stopMovingPlayer)
+ 
+func stopMovingPlayer():
+    movePlayerX = 0
+    movePlayerY = 0
+
+var movePlayerX = 0
+var movePlayerY = 0
+
+func movePlayer(e):
+    movePlayerX = e.x
+    movePlayerY = e.y
+   
 func _physics_process(delta):
     
     # Handle functions
@@ -100,10 +113,13 @@ func handle_controls(delta):
     
     var input := Vector3.ZERO
     
-    input.x = Input.get_axis("move_left", "move_right")
-    input.z = Input.get_axis("move_forward", "move_back")
+    #input.x = Input.get_axis("move_left", "move_right")
+    #input.z = Input.get_axis("move_forward", "move_back")
     
-    #input = input.rotated(Vector3.UP, view.rotation.y).normalized()
+    input.x = movePlayerX
+    input.z = movePlayerY
+    
+    input = input.rotated(Vector3.UP, view.rotation.y).normalized()
     
     movement_velocity = input * movement_speed * delta
     
