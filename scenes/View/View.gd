@@ -9,6 +9,7 @@ func _ready():
     Arcane.init(self, { "deviceType": "view", "logLevel": "verbose" })
     
     Arcane.msg.on(AEventName.ArcaneClientInitialized, onArcaneClientInitialized)
+    
 
 func onArcaneClientInitialized(initialState: AModels.InitialState):
     for pad in initialState.pads: 
@@ -21,6 +22,16 @@ func onArcaneClientInitialized(initialState: AModels.InitialState):
         
     #if(initialState.pads.size() < 1):
     #Arcane.msg.on(AEventName.IframePadDisconnect, onIframePadDisconnect)
+    
+    Arcane.msg.on(AEventName.PauseApp, onPauseApp)
+    Arcane.msg.on(AEventName.ResumeApp, onResumeApp)
+    
+
+func onPauseApp():
+    $PausePanel.show()
+
+func onResumeApp():
+    $PausePanel.hide()
     
 
 func onIframePadConnect(e):

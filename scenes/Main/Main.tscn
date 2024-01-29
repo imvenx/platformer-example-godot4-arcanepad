@@ -1,6 +1,31 @@
 [gd_scene load_steps=2 format=3 uid="uid://dclmt1al4x0er"]
 
-[ext_resource type="Script" path="res://Scenes/Main/Main.gd" id="1_y47u3"]
+[sub_resource type="GDScript" id="GDScript_ahg50"]
+script/source = "extends Control
+
+const PadScenePath = \"res://Scenes/Pad/Pad.tscn\"
+const ViewScenePath = \"res://Scenes/View/View.tscn\"
+
+
+func _ready():
+    call_deferred(\"goToPropperScene\")
+    
+
+func goToPropperScene():
+    if ResourceLoader.exists(PadScenePath) and not ResourceLoader.exists(ViewScenePath):
+        goToPadScene()
+        return
+        
+    goToViewScene()
+
+
+func goToPadScene():
+    get_tree().change_scene_to_file(PadScenePath)
+
+
+func goToViewScene():
+    get_tree().change_scene_to_file(ViewScenePath)
+"
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -9,4 +34,4 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_y47u3")
+script = SubResource("GDScript_ahg50")
